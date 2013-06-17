@@ -32,10 +32,17 @@ class Frontend extends ApiFrontend {
             ;
 
         // If you wish to restrict access to your pages, use BasicAuth class
-        $this->add('BasicAuth')
-            ->allow('demo','demo')
+        $this->add('Menu',null,'Menu')
+            ->addMenuItem('index','Welcome')
+            ->addMenuItem('user_dashboard','Users Area')
+            ->addMenuItem('logout','Logout')
+            ;
+            
+        $auth=$this->add('BasicAuth')->allowPage(array('index'));
+        $auth->setModel('User','username','password');
+        $auth->check()
+            // ->allow('demo','demo')
             // use check() and allowPage for white-list based auth checking
-            //->check()
             ;
 
         // This method is executed for ALL the pages you are going to add,
@@ -47,12 +54,6 @@ class Frontend extends ApiFrontend {
 
         // If you are using a complex menu, you can re-define
         // it and place in a separate class
-        $this->add('Menu',null,'Menu')
-            ->addMenuItem('index','Welcome')
-            ->addMenuItem('branch','Branch')
-            ->addMenuItem('course','Course')
-           
-            ;
 
         $this->addLayout('UserMenu');
     }
